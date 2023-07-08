@@ -8,8 +8,6 @@ export function Form(props) {
   const [falseAnswer, setFalseAnswer] = useState(props.form.newFalseAnswer);
   const { inputChange } = props;
 
-  console.log(question, trueAnswer, falseAnswer);
-
   const formUpdate = () => {
     inputChange({
       newQuestion: question,

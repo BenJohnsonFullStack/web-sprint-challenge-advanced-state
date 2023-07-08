@@ -1,33 +1,38 @@
-import { INPUT_CHANGE, MOVE_CLOCKWISE } from "./action-types";
+import { INPUT_CHANGE, MOVE_CLOCKWISE, SET_INFO_MESSAGE } from "./action-types";
 import { MOVE_COUNTERCLOCKWISE } from "./action-types";
 
 // ❗ You don't need to add extra action creators to achieve MVP
-export function moveClockwise() {
+export function moveClockwise(index) {
   return {
     type: MOVE_CLOCKWISE,
+    payload: index,
   };
 }
 
-export function moveCounterClockwise() {
+export function moveCounterClockwise(index) {
   return {
     type: MOVE_COUNTERCLOCKWISE,
+    payload: index,
   };
 }
 
 export function selectAnswer() {}
 
-export function setMessage() {}
-
-export function setQuiz() {}
-
-export function inputChange(newText) {
+export function setMessage(message) {
   return {
-    type: INPUT_CHANGE,
-    payload: newText,
+    type: SET_INFO_MESSAGE,
+    payload: message,
   };
 }
 
-export function resetForm() {}
+export function setQuiz() {}
+
+export function inputChange(formObj) {
+  return {
+    type: INPUT_CHANGE,
+    payload: formObj,
+  };
+}
 
 // ❗ Async action creators
 export function fetchQuiz() {
