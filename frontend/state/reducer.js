@@ -32,7 +32,7 @@ function form(state = initialFormState, action) {
     case INPUT_CHANGE:
       return {
         ...state,
-        newQuestion: action.payload,
+        form: action.payload,
       };
     default:
       return state;
