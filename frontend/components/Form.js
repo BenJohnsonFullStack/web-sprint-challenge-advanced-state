@@ -3,15 +3,14 @@ import { connect } from "react-redux";
 import { inputChange } from "../state/action-creators";
 
 export function Form(props) {
-  const { newQuestion, newTrueAnswer, newFalseAnswer, inputChange } = props;
-
-  console.log(newQuestion);
-
+  const { inputChange } = props;
   const onChange = (evt) => {
     inputChange(evt.target.value);
   };
 
-  const onSubmit = (evt) => {};
+  const onSubmit = (evt) => {
+    evt.preventDefault();
+  };
 
   return (
     <form id="form" onSubmit={onSubmit}>
@@ -39,12 +38,4 @@ export function Form(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    newQuestion: state.form.newQuestion,
-    newTrueAnswer: state.form.newTrueAnswer,
-    newFalseAnswer: state.form.newFalseAnswer,
-  };
-};
-
-export default connect(mapStateToProps, { inputChange })(Form);
+export default connect((state) => state, { inputChange })(Form);
