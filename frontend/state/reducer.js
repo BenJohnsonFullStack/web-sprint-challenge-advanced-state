@@ -6,6 +6,7 @@ import {
   MOVE_COUNTERCLOCKWISE,
   SET_INFO_MESSAGE,
   SET_QUIZ_INTO_STATE,
+  SET_SELECTED_ANSWER,
 } from "./action-types";
 
 const initialWheelState = 0;
@@ -32,7 +33,12 @@ function quiz(state = initialQuizState, action) {
 
 const initialSelectedAnswerState = null;
 function selectedAnswer(state = initialSelectedAnswerState, action) {
-  return state;
+  switch (action.type) {
+    case SET_SELECTED_ANSWER:
+      return state;
+    default:
+      return state;
+  }
 }
 
 const initialMessageState = "";

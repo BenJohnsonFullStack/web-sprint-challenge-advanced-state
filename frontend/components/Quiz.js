@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchQuiz } from "../state/action-creators";
+import { fetchQuiz, selectAnswer } from "../state/action-creators";
 
 export function Quiz(props) {
   const { fetchQuiz } = props;
@@ -8,8 +8,6 @@ export function Quiz(props) {
   useEffect(() => {
     fetchQuiz();
   }, []);
-
-  console.log(props.quiz);
 
   return (
     <div id="wrapper">
@@ -43,4 +41,4 @@ export function Quiz(props) {
   );
 }
 
-export default connect((state) => state, { fetchQuiz })(Quiz);
+export default connect((state) => state, { fetchQuiz, selectAnswer })(Quiz);

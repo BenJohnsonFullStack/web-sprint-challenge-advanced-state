@@ -3,6 +3,7 @@ import {
   MOVE_CLOCKWISE,
   SET_INFO_MESSAGE,
   SET_QUIZ_INTO_STATE,
+  SET_SELECTED_ANSWER,
 } from "./action-types";
 import { MOVE_COUNTERCLOCKWISE } from "./action-types";
 import axios from "axios";
@@ -22,7 +23,12 @@ export function moveCounterClockwise(index) {
   };
 }
 
-export function selectAnswer() {}
+export function selectAnswer(bool) {
+  return {
+    type: SET_SELECTED_ANSWER,
+    payload: bool,
+  };
+}
 
 export function setMessage(message) {
   return {
