@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { fetchQuiz, selectAnswer } from "../state/action-creators";
 
@@ -9,8 +9,8 @@ export function Quiz(props) {
     fetchQuiz();
   }, []);
 
-  const handleSelectAnswer = (e) => {
-    selectAnswer(e.target);
+  const setAnswerId = (id) => {
+    selectAnswer(id);
   };
 
   return (
@@ -22,15 +22,25 @@ export function Quiz(props) {
             <h2>{props.quiz.question}</h2>
 
             <div id="quizAnswers">
-              <div className="answer selected">
-                {props.quiz.answers[0].text}
-                <button onClick={handleSelectAnswer}>Select</button>
-              </div>
-
-              <div className="answer">
-                {props.quiz.answers[1].text}
-                <button onClick={handleSelectAnswer}>Select</button>
-              </div>
+              {props.quiz.answers.map((answer, idx) => {
+                return (
+                  <div
+                    key={idx}
+                    className={`answer ${
+                      props.selectedAnswer === answer.answer_id
+                        ? "selected"
+                        : ""
+                    }`}
+                  >
+                    {answer.text}
+                    <button onClick={() => setAnswerId(answer.answer_id)}>
+                      {props.selectedAnswer === answer.answer_id
+                        ? "SELECTED"
+                        : "Select"}
+                    </button>
+                  </div>
+                );
+              })}
             </div>
 
             <button id="submitAnswerBtn" onClick={fetchQuiz}>

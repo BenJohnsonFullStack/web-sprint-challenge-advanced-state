@@ -23,12 +23,10 @@ export function moveCounterClockwise(index) {
   };
 }
 
-export function selectAnswer(target) {
-  let selectedButton = target;
-  selectedButton.innerText = "SELECTED";
+export function selectAnswer(id) {
   return {
     type: SET_SELECTED_ANSWER,
-    payload: selectedButton,
+    payload: id,
   };
 }
 
