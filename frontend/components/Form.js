@@ -61,11 +61,11 @@ export function Form(props) {
       <button
         id="submitNewQuizBtn"
         disabled={
-          question.trim().length <= 1 ||
-          trueAnswer.trim().length <= 1 ||
-          falseAnswer.trim().length <= 1
-            ? true
-            : false
+          question.trim().length >= 2 &&
+          trueAnswer.trim().length >= 2 &&
+          falseAnswer.trim().length >= 2
+            ? false
+            : true
         }
       >
         Submit new quiz

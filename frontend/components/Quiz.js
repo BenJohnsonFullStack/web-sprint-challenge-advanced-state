@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchQuiz, selectAnswer } from "../state/action-creators";
+import { fetchQuiz, selectAnswer, setMessage } from "../state/action-creators";
+import { Message } from "./Message";
 
 export function Quiz(props) {
-  const { fetchQuiz, selectAnswer } = props;
+  const { fetchQuiz, selectAnswer, setMessage } = props;
 
   useEffect(() => {
     fetchQuiz();
   }, []);
+
+  const submitMessage = (message) => {
+    fetchQuiz();
+    setMessage(message);
+  };
 
   const setAnswerId = (id) => {
     selectAnswer(id);
@@ -43,7 +49,7 @@ export function Quiz(props) {
               })}
             </div>
 
-            <button id="submitAnswerBtn" onClick={fetchQuiz}>
+            <button id="submitAnswerBtn" onClick={submitMessage}>
               Submit answer
             </button>
           </>
@@ -55,4 +61,8 @@ export function Quiz(props) {
   );
 }
 
-export default connect((state) => state, { fetchQuiz, selectAnswer })(Quiz);
+export default connect((state) => state, {
+  fetchQuiz,
+  selectAnswer,
+  setMessage,
+})(Quiz);
