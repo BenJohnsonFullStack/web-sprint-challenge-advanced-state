@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { fetchQuiz, selectAnswer } from "../state/action-creators";
 
 export function Quiz(props) {
-  const { fetchQuiz } = props;
+  const { fetchQuiz, selectAnswer } = props;
 
   useEffect(() => {
     fetchQuiz();
