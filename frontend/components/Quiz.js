@@ -1,18 +1,20 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchQuiz, selectAnswer, setMessage } from "../state/action-creators";
-import { Message } from "./Message";
+import { fetchQuiz, postAnswer, selectAnswer } from "../state/action-creators";
 
 export function Quiz(props) {
-  const { fetchQuiz, selectAnswer, setMessage } = props;
+  const { fetchQuiz, selectAnswer, postAnswer } = props;
 
   useEffect(() => {
     fetchQuiz();
   }, []);
 
-  const submitMessage = (message) => {
-    fetchQuiz();
-    setMessage(message);
+  const submitAnswer = () => {
+    const quizAnswer = {
+      quiz_id: props.quiz.quiz_id,
+      answer_id: props.selectedAnswer,
+    };
+    postAnswer(quizAnswer);
   };
 
   const setAnswerId = (id) => {
@@ -49,7 +51,11 @@ export function Quiz(props) {
               })}
             </div>
 
-            <button id="submitAnswerBtn" onClick={submitMessage}>
+            <button
+              id="submitAnswerBtn"
+              onClick={submitAnswer}
+              disabled={props.selectedAnswer === null ? true : false}
+            >
               Submit answer
             </button>
           </>
@@ -64,5 +70,5 @@ export function Quiz(props) {
 export default connect((state) => state, {
   fetchQuiz,
   selectAnswer,
-  setMessage,
+  postAnswer,
 })(Quiz);

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { inputChange } from "../state/action-creators";
+import { inputChange, postQuiz } from "../state/action-creators";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export function Form(props) {
@@ -16,19 +16,26 @@ export function Form(props) {
     "falseAnswer",
     props.form.newFalseAnswer
   );
-  const { inputChange } = props;
+  const { inputChange, postQuiz } = props;
 
-  const formUpdate = () => {
-    inputChange({
+  const onSubmit = (evt) => {
+    const newQuizQuestion = {
       newQuestion: question,
       newTrueAnswer: trueAnswer,
       newFalseAnswer: falseAnswer,
-    });
-  };
+    };
 
-  const onSubmit = (evt) => {
+    const newQuizPost = {
+      question_text: question,
+      true_answer_text: trueAnswer,
+      false_answer_text: falseAnswer,
+    };
+
+    const questionMessageText = question;
+
     evt.preventDefault();
-    formUpdate();
+    inputChange(newQuizQuestion);
+    postQuiz(newQuizPost, questionMessageText);
     setQuestion("");
     setTrueAnswer("");
     setFalseAnswer("");
@@ -74,4 +81,4 @@ export function Form(props) {
   );
 }
 
-export default connect((state) => state, { inputChange })(Form);
+export default connect((state) => state, { inputChange, postQuiz })(Form);

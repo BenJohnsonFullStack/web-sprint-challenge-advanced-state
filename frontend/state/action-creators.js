@@ -37,10 +37,10 @@ export function setMessage(message) {
   };
 }
 
-export function setQuiz(message) {
+export function setQuiz(quizObj) {
   return {
     type: SET_QUIZ_INTO_STATE,
-    payload: message,
+    payload: quizObj,
   };
 }
 
@@ -70,19 +70,51 @@ export const fetchQuiz = () => (dispatch) => {
   // - Dispatch an action to send the obtained quiz to its state
 };
 
-export function postAnswer() {
-  return function (dispatch) {
-    // On successful POST:
-    // - Dispatch an action to reset the selected answer state
-    // - Dispatch an action to set the server message to state
-    // - Dispatch the fetching of the next quiz
-  };
-}
-export function postQuiz() {
-  return function (dispatch) {
-    // On successful POST:
-    // - Dispatch the correct message to the the appropriate state
-    // - Dispatch the resetting of the form
-  };
-}
+export const postAnswer = (quizAnswerPost) => (dispatch) => {
+  dispatch(selectAnswer(null));
+  axios
+    .post("http://localhost:9000/api/quiz/answer", quizAnswerPost)
+    .then((res) => {
+      dispatch(setMessage(res.data.message));
+    })
+    .then(() => {
+      dispatch(fetchQuiz());
+    })
+    .catch((err) => {
+      dispatch(setMessage(err.message));
+    });
+  // On successful POST:
+  // - Dispatch an action to reset the selected answer state
+  // - Dispatch an action to set the server message to state
+  // - Dispatch the fetching of the next quiz
+};
+
+export const postQuiz = (newQuizPost, questionMessageText) => (dispatch) => {
+  axios
+    .post("http://localhost:9000/api/quiz/new", newQuizPost)
+    .then((res) => {
+      dispatch(setQuiz(res.data));
+    })
+    .then(() => {
+      dispatch(
+        setMessage(`Congrats: "${questionMessageText}" is a great question!`)
+      );
+    })
+    .then(() => {
+      dispatch(
+        inputChange({
+          newQuestion: "",
+          newTrueAnswer: "",
+          newFalseAnswer: "",
+        })
+      );
+    })
+    .catch((err) => {
+      dispatch(setMessage(err.message));
+    });
+  // On successful POST:
+  // - Dispatch the correct message to the the appropriate state
+  // - Dispatch the resetting of the form
+};
+
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state
