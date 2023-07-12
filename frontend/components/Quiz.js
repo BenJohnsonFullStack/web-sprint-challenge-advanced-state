@@ -6,7 +6,7 @@ export function Quiz(props) {
   const { fetchQuiz, selectAnswer, postAnswer } = props;
 
   useEffect(() => {
-    fetchQuiz();
+    if (props.quiz === null) fetchQuiz();
   }, []);
 
   const submitAnswer = () => {

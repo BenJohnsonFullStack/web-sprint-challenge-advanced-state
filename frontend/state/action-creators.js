@@ -92,9 +92,6 @@ export const postAnswer = (quizAnswerPost) => (dispatch) => {
 export const postQuiz = (newQuizPost, questionMessageText) => (dispatch) => {
   axios
     .post("http://localhost:9000/api/quiz/new", newQuizPost)
-    .then((res) => {
-      dispatch(setQuiz(res.data));
-    })
     .then(() => {
       dispatch(
         setMessage(`Congrats: "${questionMessageText}" is a great question!`)
